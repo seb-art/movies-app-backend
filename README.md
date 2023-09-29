@@ -1,6 +1,6 @@
 # Movies App Backend
 
-Welcome to the Movies App Backend repository! This backend server is the heart of our Movies App, providing the necessary APIs and functionality to manage and serve movie data to our application.
+Welcome to the Movies App Backend repository. This backend server is the heart of our Movies App, providing the necessary APIs and functionality to manage and serve movie data to our application.
 
 ## Table of Contents
 
