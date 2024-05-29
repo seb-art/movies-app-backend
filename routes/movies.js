@@ -28,6 +28,9 @@ router.get("/", async (req, res) => {
 });
 
 router.get("/:id", async (req, res) => {
+  if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+    return res.status(400).send("Invalid ID format");
+  }
   const movie = await Movie.findById(req.params.id);
   if (!movie) {
     return res
@@ -50,6 +53,9 @@ router.post("/", async (req, res) => {
 
 //PUT request
 router.put("/:id", async (req, res) => {
+  if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+    return res.status(400).send("Invalid ID format");
+  }
   const { error } = validateMovie(req.body);
   if (error) {
     return res.status(400).send(error.details[0].message);
@@ -69,6 +75,9 @@ router.put("/:id", async (req, res) => {
 
 //DELETE request
 router.delete("/:id", async (req, res) => {
+  if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+    return res.status(400).send("Invalid ID format");
+  }
   const movie = await Movie.findByIdAndDelete(req.params.id);
   if (!movie) {
     res.status(404).send("The genre with the Given ID was not found");

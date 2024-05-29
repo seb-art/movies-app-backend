@@ -23,6 +23,9 @@ router.get("/", async (req, res) => {
 });
 
 router.get("/:id", async (req, res) => {
+  if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+    return res.status(400).send("Invalid ID format");
+  }
   const genre = await Genre.findById(req.params.id);
 
   if (!genre) {
@@ -46,6 +49,9 @@ router.post("/", async (req, res) => {
 
 //PUT request
 router.put("/:id", async (req, res) => {
+  if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+    return res.status(400).send("Invalid ID format");
+  }
   const { error } = validateGenre(req.body);
   if (error) {
     return res.status(400).send(error.details[0].message);
@@ -68,6 +74,9 @@ router.put("/:id", async (req, res) => {
 
 //DELETE request
 router.delete("/:id", async (req, res) => {
+  if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+    return res.status(400).send("Invalid ID format");
+  }
   const genre = await Genre.findByIdAndremove(req.params.id);
 
   if (!genre) {
