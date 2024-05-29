@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const Joi = require('joi')
+const Joi = require("joi");
 const express = require("express");
 const router = express.Router();
 
@@ -32,18 +32,18 @@ router.get("/:id", async (req, res) => {
 
 //POST request
 router.post("/", async (req, res) => {
-  const { error } = validatecustomer(req.body);
+  const { error } = validateCustomer(req.body);
   if (error) {
     return res.status(400).send(error.details[0].message);
   }
-  let customer = new Customer({ name: req.params.name });
+  let customer = new Customer({ name: req.body.name });
   customer = await customer.save();
   res.send(customer);
 });
 
 //PUT request
 router.put("/:id", (req, res) => {
-  const { error } = validatecustomer(req.body);
+  const { error } = validateCustomer(req.body);
   if (error) {
     return res.status(400).send(error.details[0].message);
   }
@@ -74,14 +74,13 @@ router.delete("/:id", (req, res) => {
 });
 
 //INPUT VALIDATION
-function validatecustomer(customer) {
-  const schema = {
+
+function validateCustomer(customer) {
+  const schema = Joi.object({
     name: Joi.string().min(3).required(),
-  };
+  });
 
-  return Joi.validate(customer, schema);
+  return schema.validate(customer);
 }
-
-module.exports = router;
 
 module.exports = router;

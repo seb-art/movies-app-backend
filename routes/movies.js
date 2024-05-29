@@ -79,11 +79,11 @@ router.delete("/:id", async (req, res) => {
 
 //INPUT VALIDATION
 function validateMovie(movie) {
-  const schema = {
+  const schema = Joi.object({
     name: Joi.string().min(3).required(),
-  };
+  });
 
-  return Joi.validate(movie, schema);
+  return schema.validate(movie);
 }
 
 module.exports = router;
