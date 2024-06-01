@@ -6,7 +6,7 @@ const {
   createMovie,
   updateMovie,
   deleteMovie,
-} = require("../controllers/movieController");
+} = require("../controllers/MovieController");
 
 
 //GET request

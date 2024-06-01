@@ -1,5 +1,5 @@
 const Joi = require("joi");
-const Customer = require('../models/customerModel')
+const Customer = require('../models/customers')
 
 const getCustomers = async (req, res) => {
   const customers = await Customer.find().sort("name");

@@ -7,7 +7,7 @@ const {
   createGenre,
   updateGenre,
   deleteGenre,
-} = require("../controllers/movieGenreController");
+} = require("../controllers/MovieGenreController");
 
 //GET request
 

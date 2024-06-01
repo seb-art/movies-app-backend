@@ -5,7 +5,7 @@ const {
   createCustomer,
   updateCustomer,
   deleteCustomer,
-} = require("../controllers/customerController");
+} = require("../controllers/CustomerController");
 const router = express.Router();
 
 //GET request
