@@ -1,4 +1,5 @@
 const Joi = require("joi");
+const Movie = require("../models/movieModel")
 
 const getMovies = async (req, res) => {
   const movies = await Movie.find();
