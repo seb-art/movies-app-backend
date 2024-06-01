@@ -7,7 +7,7 @@ const home = require("./routes/home");
 const app = express();
 
 mongoose
-  .connect("mongodb://localhost:27017/movies")
+  .connect("mongodb://localhost:27017/moviesX")
   .then(() => console.log("connected to the DB..."))
   .catch((err) => console.log("Something went wrong", err));
 

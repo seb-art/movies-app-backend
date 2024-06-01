@@ -10,6 +10,15 @@ const customerSchema = new mongoose.Schema({
     minlength: 3,
     maxlength: 50,
   },
+  phone: {
+    type: Number,
+    required: true,
+    min: 10,
+  },
+  isGold: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const Customer = mongoose.model("Customer", customerSchema);
@@ -39,7 +48,8 @@ router.post("/", async (req, res) => {
   if (error) {
     return res.status(400).send(error.details[0].message);
   }
-  let customer = new Customer({ name: req.body.name });
+  // const { name, phone, isGold } = req.body;
+  let customer = new Customer(req.body);
   customer = await customer.save();
   res.send(customer);
 });
@@ -87,6 +97,8 @@ router.delete("/:id", (req, res) => {
 function validateCustomer(customer) {
   const schema = Joi.object({
     name: Joi.string().min(3).required(),
+    phone: Joi.number().min(10).required(),
+    isGold: Joi.boolean(),
   });
 
   return schema.validate(customer);

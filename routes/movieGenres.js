@@ -77,7 +77,7 @@ router.delete("/:id", async (req, res) => {
   if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
     return res.status(400).send("Invalid ID format");
   }
-  const genre = await Genre.findByIdAndremove(req.params.id);
+  const genre = await Genre.findByIdAndDelete(req.params.id);
 
   if (!genre) {
     res
