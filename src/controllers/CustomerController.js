@@ -1,5 +1,6 @@
 const Joi = require("joi");
-const Customer = require('../models/customers')
+const Customer = require("../models/customers");
+const mongoose = require("mongoose");
 
 const getCustomers = async (req, res) => {
   const customers = await Customer.find().sort("name");

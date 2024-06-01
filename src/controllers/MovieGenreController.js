@@ -1,8 +1,9 @@
 const Joi = require("joi");
-const Genre = require('../models/genres')
+const Genre = require("../src/models/genres");
+const mongoose = require("mongoose");
+
 const getGenres = async (req, res) => {
   const genres = await Genre.find().sort("name");
-
   res.send(genres);
 };
 
@@ -79,9 +80,9 @@ function validateGenre(genre) {
 }
 
 module.exports = {
-    getGenres,
-    getGenre,
-    createGenre,
-    updateGenre,
-    deleteGenre,
-  };
+  getGenres,
+  getGenre,
+  createGenre,
+  updateGenre,
+  deleteGenre,
+};

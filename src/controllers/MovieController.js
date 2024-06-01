@@ -1,5 +1,6 @@
 const Joi = require("joi");
 const Movie = require("../models/movies")
+const mongoose = require ("mongoose")
 
 const getMovies = async (req, res) => {
   const movies = await Movie.find();
