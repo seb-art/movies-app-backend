@@ -3,7 +3,7 @@ const Movie = require("../models/movies")
 const mongoose = require ("mongoose")
 
 const getMovies = async (req, res) => {
-  const movies = await Movie.find();
+  const movies = await Movie.find().populate('genre');
   res.send(movies);
 };
 
@@ -25,10 +25,21 @@ const createMovie = async (req, res) => {
   if (error) {
     return res.status(400).send(error.details[0].message);
   }
-  let movie = new Movie({ name: req.body.name, genre: req.body.genre });
 
-  res.send(movie);
+  let movie = new Movie({
+    name: req.body.name,
+    genre: req.body.genre
+  });
+
+  try {
+    movie = await movie.save();
+    res.send(movie);
+  } catch (ex) {
+    console.error('Error saving movie:', ex);
+    res.status(500).send('Something failed.');
+  }
 };
+
 
 const updateMovie = async (req, res) => {
   if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
@@ -67,10 +78,12 @@ const deleteMovie = async (req, res) => {
 function validateMovie(movie) {
   const schema = Joi.object({
     name: Joi.string().min(3).required(),
+    genre: Joi.string().required() 
   });
 
   return schema.validate(movie);
 }
+
 
 module.exports = {
   getMovies,

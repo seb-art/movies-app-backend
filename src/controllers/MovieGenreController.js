@@ -1,9 +1,9 @@
 const Joi = require("joi");
-const Genre = require("../src/models/genres");
+const Genre = require("../models/genres");
 const mongoose = require("mongoose");
 
 const getGenres = async (req, res) => {
-  const genres = await Genre.find().sort("name");
+  const genres = await Genre.find();
   res.send(genres);
 };
 

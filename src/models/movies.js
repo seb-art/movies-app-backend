@@ -8,11 +8,9 @@ const movieSchema = new mongoose.Schema({
     maxlength: 50,
   },
   genre: {
-    type: String,
-    required: true,
-    minlength: 3,
-    maxlength: 50,
-  },
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Genre'
+  }, 
 });
 
 const Movie = mongoose.model("Movie", movieSchema);
