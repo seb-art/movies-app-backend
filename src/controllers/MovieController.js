@@ -1,5 +1,6 @@
 const Joi = require("joi");
 const Movie = require("../models/movies")
+const Genre = require('../models/genres')
 const mongoose = require ("mongoose")
 
 const getMovies = async (req, res) => {
@@ -25,8 +26,19 @@ const createMovie = async (req, res) => {
   if (error) {
     return res.status(400).send(error.details[0].message);
   }
+  const genre = await Genre.findById(req.body.genreId);
+  if(!genre) res.status(404).json({message: "Could not find the genre with the specified ID"})
+  
 
-  let movie = new Movie(req.body);
+  let movie = new Movie({
+    title: req.body.title,
+    genre: {
+      _id: genre._id,
+      name: genre.name
+    },
+    numberInStock: req.body.numberInStock,
+    dailyRentalRate: req.body.dailyRentalRate,
+  });
 
   try {
     movie = await movie.save();
@@ -75,9 +87,9 @@ const deleteMovie = async (req, res) => {
 function validateMovie(movie) {
   const schema = Joi.object({
     title: Joi.string().min(3).required(),
-    genre: Joi.string().required(),
-    numberInStock: Joi.number(),
-    dailyRentalRate:Joi.number(), 
+    genreId: Joi.string().required(),
+    numberInStock: Joi.number().required(),
+    dailyRentalRate:Joi.number().required(), 
   });
 
   return schema.validate(movie);
