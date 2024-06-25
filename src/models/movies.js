@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const movieSchema = new mongoose.Schema({
-  name: {
+  title: {
     type: String,
     required: true,
     minlength: 3,
@@ -11,6 +11,13 @@ const movieSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Genre'
   }, 
+  numberInStock: {
+    type: Number
+  },
+  dailyRentalRate:{
+    type: Number,
+  }
+
 });
 
 const Movie = mongoose.model("Movie", movieSchema);

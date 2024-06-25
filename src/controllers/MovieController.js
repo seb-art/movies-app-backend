@@ -26,10 +26,7 @@ const createMovie = async (req, res) => {
     return res.status(400).send(error.details[0].message);
   }
 
-  let movie = new Movie({
-    name: req.body.name,
-    genre: req.body.genre
-  });
+  let movie = new Movie(req.body);
 
   try {
     movie = await movie.save();
@@ -77,8 +74,10 @@ const deleteMovie = async (req, res) => {
 //INPUT VALIDATION
 function validateMovie(movie) {
   const schema = Joi.object({
-    name: Joi.string().min(3).required(),
-    genre: Joi.string().required() 
+    title: Joi.string().min(3).required(),
+    genre: Joi.string().required(),
+    numberInStock: Joi.number(),
+    dailyRentalRate:Joi.number(), 
   });
 
   return schema.validate(movie);
