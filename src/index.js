@@ -4,6 +4,7 @@ const genres = require("./routes/GenreRoute");
 const movies = require("./routes/MovieRoute");
 const rentals = require('./routes/RentalRoute')
 const customers = require("./routes/CustomerRoute");
+const users = require("./routes/UserRoute")
 const home = require("./routes/HomeRoute");
 const app = express();
 
@@ -18,6 +19,7 @@ app.use("/api/rentals", rentals)
 app.use("/api/genres", genres);
 app.use("/api/movies", movies);
 app.use("/api/customers", customers);
+app.use("/api/users", users);
 
 // SERVING
 const port = process.env.PORT || 3000;
