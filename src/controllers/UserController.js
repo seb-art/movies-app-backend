@@ -1,8 +1,9 @@
 const Joi = require("joi");
-const bcrypt = require('bcrypt')
+const bcrypt = require("bcrypt");
 const _ = require("lodash");
-const mongoose = require("mongoose"); // Ensure mongoose is required
-const User = require("../models/users"); // Correct path to User model
+const mongoose = require("mongoose");
+const User = require("../models/users");
+const jwt = require("jsonwebtoken");
 
 // Create a new user
 const createUser = async (req, res) => {
@@ -14,11 +15,17 @@ const createUser = async (req, res) => {
   let user = await User.findOne({ email: req.body.email });
   if (user) return res.status(400).json({ message: "User already exists" });
   user = new User(_.pick(req.body, ["name", "email", "password"]));
-  const salt = await bcrypt.genSalt(10)
-  user.password = await bcrypt.hash(user.password, salt)
+  const salt = await bcrypt.genSalt(10);
+  user.password = await bcrypt.hash(user.password, salt);
   try {
     await user.save();
-    res.json(_.pick(user, ["_id", "name", "email"]));
+    const token = jwt.sign(
+      { _id: user._id, name: user.name },
+      process.env.JWT_SECRET
+    );
+    res
+      .header("x-auth-token", token)
+      .json(_.pick(user, ["_id", "name", "email"]));
   } catch (err) {
     res.status(500).send(err.message);
   }
