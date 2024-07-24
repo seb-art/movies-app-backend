@@ -3,7 +3,6 @@ const bcrypt = require("bcrypt");
 const _ = require("lodash");
 const mongoose = require("mongoose");
 const User = require("../models/users");
-const jwt = require("jsonwebtoken");
 
 // Create a new user
 const createUser = async (req, res) => {
@@ -19,10 +18,7 @@ const createUser = async (req, res) => {
   user.password = await bcrypt.hash(user.password, salt);
   try {
     await user.save();
-    const token = jwt.sign(
-      { _id: user._id, name: user.name },
-      process.env.JWT_SECRET
-    );
+   const token = user.generateAuthToken()
     res
       .header("x-auth-token", token)
       .json(_.pick(user, ["_id", "name", "email"]));
