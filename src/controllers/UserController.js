@@ -58,6 +58,11 @@ const updateUser = async (req, res) => {
   }
 };
 
+const getCurrentUser = async (req, res) => {
+  const user = await User.findById(req.user._id).select('-password');
+  res.json(user);
+};
+
 // INPUT VALIDATION
 function validateUser(user) {
   const schema = Joi.object({
@@ -80,4 +85,5 @@ function validateUser(user) {
 module.exports = {
   createUser,
   updateUser,
+  getCurrentUser,
 };
