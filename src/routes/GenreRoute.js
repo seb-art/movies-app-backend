@@ -1,4 +1,5 @@
 const express = require("express");
+const auth = require("../middleware/auth");
 
 const router = express.Router();
 const {
@@ -16,12 +17,12 @@ router.get("/", getGenres);
 router.get("/:id", getGenre);
 
 //POST request
-router.post("/", createGenre);
+router.post("/", auth, createGenre);
 
 //PUT request
-router.put("/:id", updateGenre);
+router.put("/:id", auth, updateGenre);
 
 //DELETE request
-router.delete("/:id", deleteGenre);
+router.delete("/:id", auth, deleteGenre);
 
 module.exports = router;

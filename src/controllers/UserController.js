@@ -18,7 +18,7 @@ const createUser = async (req, res) => {
   user.password = await bcrypt.hash(user.password, salt);
   try {
     await user.save();
-   const token = user.generateAuthToken()
+    const token = user.generateAuthToken();
     res
       .header("x-auth-token", token)
       .json(_.pick(user, ["_id", "name", "email"]));

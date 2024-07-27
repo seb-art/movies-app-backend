@@ -5,10 +5,11 @@ const {
   getRental,
   createRental,
 } = require("../controllers/RentalController");
+const auth = require("../middleware/auth");
 
 router.get("/", getRentals);
 
-router.post("/", createRental);
+router.post("/",auth, createRental);
 
 router.get("/:id", getRental);
 
