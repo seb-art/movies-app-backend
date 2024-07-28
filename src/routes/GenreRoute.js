@@ -1,5 +1,6 @@
 const express = require("express");
 const auth = require("../middleware/auth");
+const role = require("../middleware/role");
 
 const router = express.Router();
 const {
@@ -23,6 +24,6 @@ router.post("/", auth, createGenre);
 router.put("/:id", auth, updateGenre);
 
 //DELETE request
-router.delete("/:id", auth, deleteGenre);
+router.delete("/:id", [auth, role], deleteGenre);
 
 module.exports = router;
