@@ -13,7 +13,7 @@ require('dotenv').config();
 
 
 mongoose
-  .connect(process.env.MONGO_URL)
+  .connect(process.env.MONGO_URI)
   .then(() => console.log("connected to the DB..."))
   .catch((err) => console.log("Something went wrong", err));
 
@@ -27,7 +27,7 @@ app.use("/api/users", users);
 app.use("/api/auth", auth);
 
 // SERVING
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5000;
 app.listen(port, () => {
   console.log(`listening to port ${port}`);
 });
